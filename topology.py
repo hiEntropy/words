@@ -27,15 +27,14 @@ def get_topology(string):
     return topology
 
 
-@staticmethod
-def parse_topologies(self, url, min_len=0, max_len=99):
+def parse_topologies(url, min_len=0, max_len=99):
     topologies = {}
     fp = open(url, 'r', errors='strict')
     line = fp.readline()
     while line:
         len_line = len(line)
         if min_len < len_line < max_len:
-            topology = self.get_topology(line)
+            topology = get_topology(line)
             if topology in topologies.keys():
                 topologies[topology] += 1
             else:
@@ -59,16 +58,14 @@ associated with an integer representing the words frequence in the file
 :return dictionary of (string,int)
 '''
 
-
-@staticmethod
-def words_by_topology(self, topology, url):
+def words_by_topology(topology, url):
     words = {}
     fp = open(url, 'r', errors='strict')
     line = fp.readline()
     letters_in_topology = len(topology) / 2
     while line:
         if len(line) == letters_in_topology:
-            result = self.get_topology(line)
+            result = get_topology(line)
             if topology == result:
                 if line in words.keys():
                     words[line] += 1
@@ -81,7 +78,7 @@ def words_by_topology(self, topology, url):
     return words
 
 
-def pretty_print_dictionary(self, list_topologies):
+def pretty_print_dictionary(list_topologies):
     count = 1
     for x in reversed(list_topologies):
         print("{0}. {1}".format(count, str(x)))
