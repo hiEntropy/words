@@ -1,21 +1,23 @@
-from unittest import TestCase
+import unittest
 from topology import get_topology
 
 
-class TestTopology(TestCase):
-    word_File = open("test_words.txt", 'r').read()
-
-    def test_get_topology(self):
-        password = "?l?l?l?l?l?l?l?l"
+class TopologyTests(unittest.TestCase):
+    def test_get_topology1(self):
         specials = "?s?s?s?s?s"
-        mix = "?U?S?l?l?l?l?n?n"
-        self.assertEquals(password, get_topology("password"))
         self.assertEquals(specials, get_topology(".^!@%"))
-        self.assertEquals("", get_topology("P@sswo63"))
-        self.assertEquals("", None)
 
-    def test_parse_topologies(self):
-        self.fail()
+    def test_get_topology2(self):
+        password = "?l?l?l?l?l?l?l?l"
+        self.assertEquals(password, get_topology("password"))
 
-    def test_words_by_topology(self):
-        self.fail()
+    def test_get_topology3(self):
+        mix = "?u?s?l?l?l?l?n?n"
+        self.assertEquals(mix, get_topology("P@sswo63"))
+
+    def test_get_topology4(self):
+        self.assertEquals("", get_topology(None))
+
+
+if __name__ == '__main__':
+    unittest.main()
