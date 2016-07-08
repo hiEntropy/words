@@ -1,6 +1,6 @@
 import sys
 from Utilities import dictionary_to_sorted_list, pretty_print_dictionary
-from topology import parse_topologies
+from topology import parse_topologies, words_by_topology
 
 
 def main(argsv):
@@ -13,7 +13,11 @@ def main(argsv):
             results = parse_topologies(argsv[1])
             sorted_results = dictionary_to_sorted_list(results)
             pretty_print_dictionary(sorted_results)
-
+    elif len_argsv == 4:
+        if argsv[2] == '-w':
+            results = words_by_topology(argsv[3],argsv[1])
+            sorted_results = dictionary_to_sorted_list(results)
+            pretty_print_dictionary(sorted_results)
     elif len_argsv == 5:
         if argsv[2] == '-t' and argsv[3] == 'min':
             results = parse_topologies(argsv[1],min_len=int(argsv[4]))
@@ -34,7 +38,8 @@ def main(argsv):
 
 def print_options():
     print("commands:")
-    print("'words.py file -t ([-min][int]) ([-max][int])")
+    print("words.py file -t ([-min][int]) ([-max][int])")
+    print("words.py file -w topology ")
     sys.exit()
 
 
