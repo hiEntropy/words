@@ -77,7 +77,6 @@ def words_by_topology(topology, url):
     words = {}
     fp = open(url, 'r', errors='strict')
     line = fp.readline()
-    len_line = len(line)
     letters_in_topology = len(topology) / 2
     while line:
         line = trim_newline(line)
@@ -90,7 +89,6 @@ def words_by_topology(topology, url):
                     words[line] = 1
         try:
             line = fp.readline()
-            len_line = len(line)
         except ValueError:
             continue
     return words
