@@ -62,7 +62,6 @@ def parse_topologies(url, min_len=0, max_len=99,local = True):
             if not local and len(topologies) > 10000:
                 mongodb_obj.update(topologies)
                 topologies.clear()
-
         try:
             line = fp.readline()
         except ValueError:

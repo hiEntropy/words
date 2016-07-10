@@ -8,33 +8,34 @@ def main(argsv):
     if len_argsv == 2:
         if argsv[1] == "-h":
             print_options()
-    elif len_argsv == 3:
-        if argsv[2] == '-t':
-            results = parse_topologies(argsv[1])
-            sorted_results = dictionary_to_sorted_list(results)
-            pretty_print_dictionary(sorted_results)
     elif len_argsv == 4:
         if argsv[2] == '-w':
             results = words_by_topology(argsv[3],argsv[1])
             sorted_results = dictionary_to_sorted_list(results)
             pretty_print_dictionary(sorted_results)
-    elif len_argsv == 5:
-        if argsv[2] == '-t' and argsv[3] == 'min':
-            results = parse_topologies(argsv[1],min_len=int(argsv[4]))
-            sorted_results = dictionary_to_sorted_list(results)
-            pretty_print_dictionary(sorted_results)
-        elif argsv[2] == '-t' and argsv[3] == 'max':
-            results = parse_topologies(argsv[1], max_len=int(argsv[4]))
-            sorted_results = dictionary_to_sorted_list(results)
-            pretty_print_dictionary(sorted_results)
-    elif len_argsv == 7:
-        if argsv[2] == '-t' and argsv[3] == 'min' and argsv[5] == 'max':
-            results = parse_topologies(argsv[1], min_len=int(argsv[4]), max_len=int(argsv[6]))
-            sorted_results = dictionary_to_sorted_list(results)
-            pretty_print_dictionary(sorted_results)
+    elif  argsv[2] == '-t':
+        run_parse_topologies(argsv)
     else:
         print_options()
 
+
+def run_parse_topologies(argsv):
+    if type(argsv) is not list:
+        exit()
+    min_len = 0
+    max_len = 99
+    local = False
+    url = argsv[2]
+    for x in range(1, len(argsv)):
+        cur = argsv[x]
+        if cur == '-min':
+            min_len = int(argsv[x+1])
+        elif cur == '-max':
+            max_len = int(argsv[x+1])
+        elif cur == '-l':
+            local = True
+    parse_topologies(url, min_len, max_len, local)
+ 
 
 def print_options():
     print("commands:")
