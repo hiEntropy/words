@@ -1,5 +1,5 @@
 import unittest
-from topology import get_topology, words_by_topology, parse_topologies
+from topology import get_topology, words_by_topology, parse_topologies, is_topology
 
 
 class TopologyTests(unittest.TestCase):
@@ -47,6 +47,13 @@ class TopologyTests(unittest.TestCase):
         self.assertEquals(results["?n?n?n?n?n?n?n?n"], 1)
         self.assertEquals(results["?l?l?n?n?l?l?l?l?l?n"], 1)
         self.assertFalse("?l?l?l?l?l?l?l?l?s" in results.keys())
+
+    def test_is_topology(self):
+        self.assertTrue(is_topology('?l?n?s?u'))
+        self.assertTrue(is_topology("?l?l?l?l?l?l?l?l?l?l?l?n?n?n?n?n"))
+        self.assertFalse(is_topology('?s?t?l'))
+        self.assertFalse("")
+        self.assertFalse(None)
 
 
 if __name__ == '__main__':

@@ -1,4 +1,5 @@
-from Utilities import trim_newline
+from Utilities import trim_newline,credentials
+import mongodb
 
 '''
 getTopology
@@ -40,8 +41,13 @@ the topology appears in the given file. dictionary pairs are (string, int)
 '''
 
 
-def parse_topologies(url, min_len=0, max_len=99):
+def parse_topologies(url, min_len=0, max_len=99,local = True):
     topologies = {}
+    creds = None
+    mongodb_obj = None
+    if not local:
+        creds = credentials()
+        mongodb_obj = mongodb.mongodb(creds[0],creds[1],'words','topologies')
     fp = open(url, 'r', errors='strict')
     line = fp.readline()
     while line:
@@ -53,6 +59,10 @@ def parse_topologies(url, min_len=0, max_len=99):
                 topologies[topology] += 1
             else:
                 topologies[topology] = 1
+            if not local and len(topologies) > 10000:
+                mongodb_obj.update(topologies)
+                topologies.clear()
+
         try:
             line = fp.readline()
         except ValueError:
@@ -92,3 +102,15 @@ def words_by_topology(topology, url):
         except ValueError:
             continue
     return words
+
+
+def is_topology(topology):
+    for x in range(0, len(topology)):
+        if (x % 2) == 0:
+            if topology[x] != '?':
+                return False
+        elif topology[x] not in ['s', 'l', 'u', 'n']:
+            return False
+    return True
+
+

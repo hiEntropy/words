@@ -18,3 +18,11 @@ def trim_newline(line):
         return line[:len_line - 1]
     else:
         return line
+
+
+def credentials():
+    mongo_creds = open('mongo_creds')
+    user_id = mongo_creds.readline().split(':')[1]
+    user_id = user_id[0:len(user_id) - 1]
+    password = mongo_creds.readline().split(':')[1]
+    return tuple(user_id, password)
